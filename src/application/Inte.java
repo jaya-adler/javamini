@@ -184,6 +184,7 @@ private static void looping(String[] loop2) {
 		 for(int y=0;y<times;y++) 
 		  flow(loop2[1]);}
 	  }
+	 
 	 else {
 		 System.out.println("Syntax Error: Expected 'LOOP:_operation_:_int_ '\n");
 	 }
@@ -197,9 +198,9 @@ private static String[] convert(String[] val1) {
 	boolean s,t;
 	//String zero="0";
 	int vsum1=0,vsum2=0;
-	//String v1,v2;
-	//v1=data.get(val1[0]);
-	//v2=data.get(val1[1]);
+	String v1,v2;
+	v1=val1[0];;
+	v2=val1[1];
 	//System.out.print(val1[0]+" "+val1[1]+"\n");
 	s=Character.isDigit(val1[0].charAt(0)) ;
 	t=Character.isDigit(val1[1].charAt(0)) ;
@@ -208,11 +209,11 @@ private static String[] convert(String[] val1) {
 	//System.out.print(val1[0]+" "+val1[1]+"\n");
 
       	if(val1[0]==null ) {	
-    	                        System.out.print(" Make sure you initialize first\t\n");
+    	                        System.out.print(" Unknown variable :\t"+v1+"\n");
 	                       val1[0]="0"; }
 	if(val1[1]==null) { 
 	   
-	  System.out.print("Make sure you initialize first\t\n");
+	  System.out.print("Unknown variable :\t"+v2+"\n");
 	    val1[1]="0"; }
 	//System.out.print(val1[0].length()+" "+val1 [1].length()+"\n");
 	//System.out.println(val1[0]+" "+val1[1]);
@@ -245,7 +246,7 @@ private static void print(String[] val) {
 	index= search(val[1],Names);
 	//System.out.println(val[1]+"\n");
 	   if(index==-1 && data.get(val[1])==null) 
-	   {System.out.println("Variable not initialized\n"); 
+	   {System.out.println("Unknown variable :"+val[1]+"\n"); 
 	   }
 	   else if(index==-1) 
 	   {System.out.println(val[1]+":"+data.get(val[1]));
@@ -253,7 +254,9 @@ private static void print(String[] val) {
 		 }
      else if(data.get(val[1])==null) 
      {stack[index].print(); }
-	else {System.out.println("Error : "+val[1]+"  may be ambigious\n");}
+	else {System.out.println("Error : "+val[1]+"  is ambigious\n");
+	        // System.out.println("Use 'LOC:_operation_'\t  while printing ,to display local variable\n ");
+	}
 	
 	  
 	
