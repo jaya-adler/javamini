@@ -7,7 +7,7 @@ import java.util.Hashtable;
 
 public class Inte {
 	 static String[] d;
-	// @SuppressWarnings({ })
+	// @SuppressWarnings({ }) 
 	static
 	Dictionary <String,String>data= new Hashtable<>();
 	   int s=0;
