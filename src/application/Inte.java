@@ -55,7 +55,7 @@ continue Sym;
 }
 catch (IOException e) 
 {  
-  e.printStackTrace();
+  System.out.println("Syntax error \n");
   }
 
 }
@@ -70,7 +70,7 @@ private static String flow(String pass) {
 	try {
 	for(int i=0;i<len;i++)
 	{  if(!Character.isLetterOrDigit(pass.charAt(i))&& !Character.isSpaceChar(pass.charAt(i)))
-	    {  //System.out.println(pass.charAt(i)+"\n");
+	    {  //SSystem.out.println(pass.charAt(i)+"\n");
 	    symbol=pass.charAt(i);
 	    if(symbol=='|') {  String keyname=pass.substring(0, i); 
 	    //System.out.println(keyname);
@@ -78,8 +78,8 @@ private static String flow(String pass) {
 	                 else {System.out.println("Syntax error : use keyword (STACK)"); i=len;}
 
 	                               }
-	             else if((pass.charAt(i)=='-' || pass.charAt(i)=='<' ) && (pass.charAt(i+1)=='-' || pass.charAt(i+1)=='>' ))
-	                    {stack_op(pass,pass.charAt(i+1),i+1); i=len;}
+	             else if((pass.charAt(i)=='-' || pass.charAt(i)=='<' ) && (pass.charAt(i+1)=='-' || pass.charAt(i+1)=='>' ) && (pass.charAt(i) !=pass.charAt(i+1)) && ((pass.charAt(i+1)-pass.charAt(i)==17) || (pass.charAt(i)-pass.charAt(i+1)==15)))                
+	                        {stack_op(pass,pass.charAt(i+1),i+1); i=len;}  
 	           
 	             else if(symbol==':') {   	loop = pass.split("\\:",3);
 		          	looping(loop); return "none";}
@@ -88,19 +88,22 @@ private static String flow(String pass) {
 	        	//System.out.println("  Syntax Error \n");i=len;
 	        switch(symbol)     
 	      { 
-	   case '+':      //i=len; 
+	   case '+':      //i=len;
+		            // System.out.println(i+" "+(i+1));
 		              val=pass.split("\\+");
 		              if(pass.charAt(i+1)=='+') {     float inc=Float.valueOf(data.get(val[0]))+1;
 		            	                              data.put(val[0], Float.toString(inc));i=len;
 		            	                              } 
-		              else { result=convert(val);
+		              else {
+		            	  result=convert(val);
 	                           //result[0].getClass().getName();
-	                              //System.out.println(Float.valueOf(result[0]));
+	                          //System.out.println(Float.valueOf(result[0]));
 	               // System.out.println(Float.valueOf(result[1]));
 		              op=Float.toString(Float.valueOf(result[0])+Float.valueOf(result[1]));
 		              return op;
 	                  //System.out.println(  Float.toString(Float.valueOf(result[0])+Float.valueOf(result[1])) );
-		              }
+		              } 
+		              break;
 		            
 	                   	                   
 	    case '-':         //i=len;       
@@ -116,6 +119,7 @@ private static String flow(String pass) {
 	    		              return op;
 	                        //System.out.println(Float.toString(Float.valueOf(result[0])-Float.valueOf(result[1])) );
 	                          }
+	    	                     break;
 	                  
 	     case '*':       //i=len;    
 	    	          val=pass.split("\\*");
@@ -147,11 +151,11 @@ private static String flow(String pass) {
 	                  //System.out.println(val[1]);
 	                  //System.out.println(pass+":"+data.get(val[1]));
 	                	   print(val); }
-	                       catch(java.lang.ArrayIndexOutOfBoundsException in) { System.out.println("Expected expression:\n");
+	                       catch(java.lang.ArrayIndexOutOfBoundsException in) { System.out.println(" Syntax Error :\nExpected expression:\n");
 	                        return "none";}
 	                           break;
 	                             
-	    default : System.out.println("Error");
+	       default : System.out.println("Check The Syntax :");
 	                 
 	       }
 	        }
@@ -159,7 +163,9 @@ private static String flow(String pass) {
 	     
 	    	// print(pass); 
 	    	 } }
-	  catch(java.lang.StringIndexOutOfBoundsException p) { System.out.println("Syntax error : \n");}
+	  catch(java.lang.StringIndexOutOfBoundsException p) { 
+		  //p.printStackTrace();
+		  System.out.println("Syntax error : \n");}
 
 	  //System.out.println("Command not found\n");
      return pass; 
@@ -344,7 +350,10 @@ static void stack_op(String val1,char sym,int j)
   
         switch(sym)
         {
-          case'>':   if(value.isEmpty()) {System.out.println("No value given to push :"); return ;}
+          case'>':   if(value.isEmpty())
+          {
+        	  System.out.println("No value given to push :"); return ;
+        	  }
                       int data = Integer.valueOf(value);
                      //System.out.println(data);
                      stack[index].push(data);
@@ -353,10 +362,12 @@ static void stack_op(String val1,char sym,int j)
           
          case '-':   try { 
         	 
-				 if(val1.charAt(j-1)=='<')  {stack[index].pop();}
+				 if(val1.charAt(j-1)=='<')  { 
+					 stack[index].pop();}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("\t| EMPTY |\t\n");
+				System.out.println("\t   "+stack[index].name()+"\t");
 			}
                      break;
         

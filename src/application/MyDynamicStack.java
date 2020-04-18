@@ -30,6 +30,10 @@ public class MyDynamicStack {
 	 * @throws Exception
 	 * 
 	 */
+	public String name() 
+	{ 
+		return this.name;
+	}
 	public void print() {
 
 		for (int i = top; i >= 0; i--) {
